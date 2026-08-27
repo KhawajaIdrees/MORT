@@ -106,11 +106,11 @@ export const Navbar = () => {
 
             <button
               onClick={toggleCart}
-              className="relative text-[#E0E0E0] hover:text-white transition-colors flex items-center"
+              className="relative text-[#E0E0E0] hover:text-white transition-colors flex items-center p-0.5"
               aria-label="Bag"
             >
               <ShoppingBag className="w-5 h-5 stroke-[1.75]" />
-              <span className="absolute -top-1.5 -right-2.5 w-4.5 h-4.5 rounded-full bg-white text-black font-sans font-bold text-[9px] flex items-center justify-center border border-black">
+              <span className="absolute -top-1.5 -right-2 w-[18px] h-[18px] rounded-full bg-white text-black font-sans font-bold text-[10px] leading-none flex items-center justify-center border border-black z-10 shadow-sm">
                 {itemCount}
               </span>
             </button>

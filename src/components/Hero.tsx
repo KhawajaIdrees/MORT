@@ -64,24 +64,30 @@ export const Hero = () => {
           </div>
         </div>
 
-        {/* Far Right Vertical Slide Indicator (With dark shadow backdrop as requested) */}
-        <div className="hidden lg:flex lg:col-span-4 flex-col items-end justify-center pr-2">
-          <div className="flex flex-col items-center gap-4 text-xs font-sans text-[#A0A0A0] bg-black/40 backdrop-blur-md px-3 py-6 rounded-full border border-white/10 shadow-2xl">
-            {slides.map((slide) => (
-              <React.Fragment key={slide}>
-                <button
-                  onClick={() => setCurrentSlide(slide)}
-                  className={`transition-colors font-medium ${
-                    currentSlide === slide ? "text-white font-bold" : "hover:text-white"
-                  }`}
-                >
-                  {slide}
-                </button>
-                {currentSlide === slide && <div className="w-4 h-[1px] bg-white my-1" />}
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
+      {/* Far Right Vertical Slide Indicator - Positioned flush right on viewport boundary */}
+      <div className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 flex-col items-center space-y-4 text-xs font-sans text-[#A0A0A0] z-20">
+        {slides.map((slide) => {
+          const isActive = currentSlide === slide;
+          return (
+            <React.Fragment key={slide}>
+              <button
+                onClick={() => setCurrentSlide(slide)}
+                className={`transition-colors tracking-widest font-sans ${
+                  isActive ? "text-white font-bold text-sm" : "text-[#777777] hover:text-white"
+                }`}
+              >
+                {slide}
+              </button>
+              {isActive && (
+                <div className="flex flex-col items-center space-y-2.5 py-0.5">
+                  <div className="w-[1.5px] h-7 bg-white/70" />
+                  <div className="w-4 h-[2px] bg-white" />
+                </div>
+              )}
+            </React.Fragment>
+          );
+        })}
+      </div>
 
       </div>
     </section>

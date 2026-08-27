@@ -11,12 +11,12 @@ export const Footer = () => {
   const currencies = ["PAKISTAN (PKR)", "UNITED STATES (USD)", "UNITED KINGDOM (GBP)", "EUROPE (EUR)"];
 
   return (
-    <footer className="bg-[#050505] border-t border-[#1A1A1A] py-6">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-sans text-[#A0A0A0]">
-        
+    <footer className="bg-[#050505] border-t border-[#1A1A1A] py-3.5">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-sans text-[#A0A0A0]">
+
         {/* Left Copyright - Exact match to screenshot */}
         <p className="tracking-widest uppercase font-medium">
-          © MORT 2024
+          © MORT 2026
         </p>
 
         {/* Center Legal Links - Exact spacing matching screenshot */}
@@ -46,9 +46,8 @@ export const Footer = () => {
                     setCurrency(curr);
                     setCurrencyOpen(false);
                   }}
-                  className={`w-full text-left px-4 py-2 text-xs font-sans tracking-widest transition-colors ${
-                    currency === curr ? "bg-[#1A1A1A] text-white" : "text-[#A0A0A0] hover:text-white"
-                  }`}
+                  className={`w-full text-left px-4 py-2 text-xs font-sans tracking-widest transition-colors ${currency === curr ? "bg-[#1A1A1A] text-white" : "text-[#A0A0A0] hover:text-white"
+                    }`}
                 >
                   {curr}
                 </button>

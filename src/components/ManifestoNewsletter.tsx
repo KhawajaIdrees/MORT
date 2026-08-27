@@ -48,25 +48,15 @@ export const ManifestoNewsletter = () => {
         </div>
 
         {/* Middle Photography - High Resolution Brutalist Architecture with MORT flag */}
-        <div className="lg:col-span-3 relative h-72 lg:h-auto min-h-[260px] bg-[#0F0F0F] border border-[#1A1A1A] overflow-hidden">
+        <div className="lg:col-span-3 relative h-72 lg:h-auto min-h-[280px] bg-[#0F0F0F] border border-[#1A1A1A] overflow-hidden">
           <Image
-            src="https://images.unsplash.com/photo-1509967419530-da38b4704bc6?auto=format&fit=crop&q=80&w=1600"
-            alt="MORT Architecture Banner"
+            src="/images/layout/banner-arch.png"
+            alt="MORT Brutalist Architecture Banner"
             fill
-            quality={95}
-            className="object-cover object-center filter brightness-90 contrast-125"
+            priority
+            unoptimized
+            className="object-cover object-center filter brightness-95 contrast-105 group-hover:scale-105 transition-transform duration-500"
           />
-          <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-            <div className="relative w-36 h-16 rotate-90">
-              <Image
-                src="/logo/mort-logo.png"
-                alt="MORT"
-                fill
-                priority
-                className="object-contain"
-              />
-            </div>
-          </div>
         </div>
 
         {/* Right Column: JOIN THE MOVEMENT */}
