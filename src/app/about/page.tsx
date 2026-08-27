@@ -23,11 +23,12 @@ export default function AboutPage() {
       {/* Cover Photography */}
       <div className="relative h-[480px] w-full border border-[#262626] bg-[#151515] overflow-hidden">
         <Image
-          src="/images/hero/hero-01.jpg"
+          src="/images/about/about-hoodie.jpg"
           alt="MORT Archive"
           fill
           priority
-          className="object-cover object-center filter brightness-45 contrast-110"
+          unoptimized
+          className="object-cover object-center filter brightness-90 contrast-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-[#0A0A0A]/40" />
         <div className="absolute bottom-10 left-10 right-10 flex flex-col md:flex-row md:items-end justify-between gap-6 z-10">

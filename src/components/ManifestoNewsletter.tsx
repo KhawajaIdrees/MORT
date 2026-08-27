@@ -47,11 +47,11 @@ export const ManifestoNewsletter = () => {
           </div>
         </div>
 
-        {/* Middle Photography - High Resolution Brutalist Architecture with MORT flag */}
+        {/* Middle Photography - High Resolution MORT Hoodie in About Section */}
         <div className="lg:col-span-3 relative h-72 lg:h-auto min-h-[280px] bg-[#0F0F0F] border border-[#1A1A1A] overflow-hidden">
           <Image
-            src="/images/layout/banner-arch.png"
-            alt="MORT Brutalist Architecture Banner"
+            src="/images/about/about-hoodie.jpg"
+            alt="ABOUT MORT Hoodie"
             fill
             priority
             unoptimized
