@@ -23,7 +23,7 @@ export default function AboutPage() {
       {/* Cover Photography */}
       <div className="relative h-[480px] w-full border border-[#262626] bg-[#151515] overflow-hidden">
         <Image
-          src="/images/about/about-hoodie.jpg"
+          src="/images/about/about-tokyo.jpg"
           alt="MORT Archive"
           fill
           priority
