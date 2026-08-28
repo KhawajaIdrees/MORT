@@ -190,7 +190,7 @@ export const COLLECTIONS: Collection[] = [
     tagline: "RESTRAINT & HEAVYWEIGHT SILHOUETTES",
     description:
       "Drop 04 features 500GSM French Terry hoodies, 280GSM heavy jersey tees, and tactical utility cargo pants designed with purpose.",
-    image: "/images/layout/hero-model.png",
+    image: "/images/layout/oblivion-archive.png",
     itemCount: 10,
   },
   {
@@ -200,7 +200,7 @@ export const COLLECTIONS: Collection[] = [
     tagline: "INDUSTRIAL HARDWARE & UTILITY",
     description:
       "Modular outerwear and magnetic buckle accessories built for urban exploration.",
-    image: "/images/layout/cat-pants.png",
+    image: "/images/layout/cyber-goth.jpg",
     itemCount: 8,
   },
   {
