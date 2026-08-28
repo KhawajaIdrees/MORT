@@ -33,7 +33,7 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-[#0A0A0A]/40" />
         <div className="absolute bottom-10 left-10 right-10 flex flex-col md:flex-row md:items-end justify-between gap-6 z-10">
           <div>
-            <span className="text-xs font-display text-[#8A8A8A] tracking-widest uppercase block">ESTABLISHED 2024</span>
+            <span className="text-xs font-display text-[#8A8A8A] tracking-widest uppercase block">ESTABLISHED 2026</span>
             <h2 className="font-display text-3xl font-bold text-[#F5F5F0] uppercase">TOKYO // LONDON // NEW YORK</h2>
           </div>
           <p className="text-xs font-sans text-[#8A8A8A] max-w-md">
