@@ -121,8 +121,8 @@ export const Navbar = () => {
           </div>
         </div>
 
-        {/* Slim Announcement Bar Directly Below Navbar */}
-        <div className="bg-[#080808] border-y border-[#1A1A1A]/80 py-1.5 px-4 text-center flex items-center justify-center">
+        {/* Slim Announcement Bar Directly Below Navbar (No background color on any device) */}
+        <div className="w-full bg-transparent border-y border-[#1A1A1A]/80 py-1.5 px-4 text-center flex items-center justify-center">
           <Link
             href="/shop"
             className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-xs font-sans font-medium tracking-[0.18em] text-[#B0B0B0] hover:text-white uppercase transition-colors"
