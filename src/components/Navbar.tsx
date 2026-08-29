@@ -39,7 +39,7 @@ export const Navbar = () => {
     { name: "COLLECTIONS", href: "/collections" },
     { name: "ABOUT", href: "/about" },
     { name: "CONTACT", href: "/contact" },
-    { name: "ACCOUNT / LOGIN", href: "/contact" },
+    { name: "ACCOUNT / LOGIN", href: "/login" },
   ];
 
   return (
@@ -51,20 +51,77 @@ export const Navbar = () => {
             : "bg-gradient-to-b from-black/95 via-black/75 to-transparent"
         }`}
       >
-        {/* Main Navbar Row: Hamburger Left | Centered MORT Logo | Search & Cart Right */}
+        {/* Main Navbar Row */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 sm:py-3.5 flex items-center justify-between relative">
           
-          {/* Left: Mobile Menu Toggle (mobile/tablet & screen widths up to 1195px) & Nav Links (xl screen desktop) */}
-          <div className="flex items-center gap-6 xl:w-1/3">
+          {/* Mobile & Tablet Hamburger View Header (Active up to 940px) */}
+          <div className="flex items-center justify-between w-full min-[941px]:hidden">
+            {/* Left: Mobile Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="xl:hidden text-white/90 hover:text-white p-1 -ml-1"
+              className="text-white/90 hover:text-white p-1 -ml-1"
               aria-label="Open menu"
             >
               <Menu className="w-5 h-5" />
             </button>
 
-            <nav className="hidden xl:flex items-center gap-8">
+            {/* Center: MORT Logo */}
+            <Link href="/" className="flex items-center justify-center">
+              <div className="relative w-32 h-7">
+                <Image
+                  src="/logo/mort-logo.png"
+                  alt="MORT"
+                  fill
+                  priority
+                  unoptimized
+                  className="object-contain object-center"
+                />
+              </div>
+            </Link>
+
+            {/* Right: Search & Cart */}
+            <div className="flex items-center gap-5">
+              <button
+                onClick={() => setSearchOpen(!searchOpen)}
+                className="text-[#E0E0E0] hover:text-white transition-colors p-1"
+                aria-label="Search"
+              >
+                <Search className="w-4.5 h-4.5 stroke-[1.75]" />
+              </button>
+
+              <button
+                onClick={toggleCart}
+                className="relative text-[#E0E0E0] hover:text-white transition-colors flex items-center p-1"
+                aria-label="Bag"
+              >
+                <ShoppingBag className="w-5 h-5 stroke-[1.75]" />
+                <span className="absolute -top-1 -right-1.5 w-[17px] h-[17px] rounded-full bg-white text-black font-sans font-bold text-[9px] leading-none flex items-center justify-center border border-black z-10 shadow-sm">
+                  {itemCount}
+                </span>
+              </button>
+            </div>
+          </div>
+
+          {/* Laptop & Desktop Header Layout (> 940px) Matching User Screenshot */}
+          <div className="hidden min-[941px]:flex items-center justify-between w-full">
+            {/* Left: MORT Logo */}
+            <div className="flex items-center w-1/4">
+              <Link href="/" className="flex items-center">
+                <div className="relative w-44 md:w-48 h-8 md:h-9">
+                  <Image
+                    src="/logo/mort-logo.png"
+                    alt="MORT"
+                    fill
+                    priority
+                    unoptimized
+                    className="object-contain object-left"
+                  />
+                </div>
+              </Link>
+            </div>
+
+            {/* Center: Nav Links */}
+            <nav className="flex items-center justify-center gap-8 md:gap-10 w-2/4">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
@@ -80,45 +137,38 @@ export const Navbar = () => {
                 );
               })}
             </nav>
+
+            {/* Right: Search, Account Profile Icon, Cart Bag Icon with Badge */}
+            <div className="flex items-center justify-end gap-6 w-1/4">
+              <button
+                onClick={() => setSearchOpen(!searchOpen)}
+                className="text-[#E0E0E0] hover:text-white transition-colors p-1"
+                aria-label="Search"
+              >
+                <Search className="w-4.5 h-4.5 stroke-[1.75]" />
+              </button>
+
+              <Link
+                href="/login"
+                className="text-[#E0E0E0] hover:text-white transition-colors p-1"
+                aria-label="Account"
+              >
+                <User className="w-5 h-5 stroke-[1.75]" />
+              </Link>
+
+              <button
+                onClick={toggleCart}
+                className="relative text-[#E0E0E0] hover:text-white transition-colors flex items-center p-1"
+                aria-label="Bag"
+              >
+                <ShoppingBag className="w-5 h-5 stroke-[1.75]" />
+                <span className="absolute -top-1 -right-1.5 w-[17px] h-[17px] rounded-full bg-white text-black font-sans font-bold text-[9px] leading-none flex items-center justify-center border border-black z-10 shadow-sm">
+                  {itemCount}
+                </span>
+              </button>
+            </div>
           </div>
 
-          {/* Center: MORT Logo */}
-          <div className="flex justify-center xl:w-1/3">
-            <Link href="/" className="flex items-center justify-center">
-              <div className="relative w-32 sm:w-40 md:w-44 h-7 sm:h-8 md:h-9">
-                <Image
-                  src="/logo/mort-logo.png"
-                  alt="MORT"
-                  fill
-                  priority
-                  unoptimized
-                  className="object-contain object-center"
-                />
-              </div>
-            </Link>
-          </div>
-
-          {/* Right Icons: Search & Shopping Bag only */}
-          <div className="flex items-center justify-end gap-5 sm:gap-6 xl:w-1/3">
-            <button
-              onClick={() => setSearchOpen(!searchOpen)}
-              className="text-[#E0E0E0] hover:text-white transition-colors p-1"
-              aria-label="Search"
-            >
-              <Search className="w-4.5 h-4.5 stroke-[1.75]" />
-            </button>
-
-            <button
-              onClick={toggleCart}
-              className="relative text-[#E0E0E0] hover:text-white transition-colors flex items-center p-1"
-              aria-label="Bag"
-            >
-              <ShoppingBag className="w-5 h-5 stroke-[1.75]" />
-              <span className="absolute -top-1 -right-1.5 w-[17px] h-[17px] rounded-full bg-white text-black font-sans font-bold text-[9px] leading-none flex items-center justify-center border border-black z-10 shadow-sm">
-                {itemCount}
-              </span>
-            </button>
-          </div>
         </div>
 
         {/* Slim Announcement Bar Directly Below Navbar (No background color on any device) */}
