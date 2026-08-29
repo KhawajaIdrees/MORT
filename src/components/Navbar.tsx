@@ -54,17 +54,17 @@ export const Navbar = () => {
         {/* Main Navbar Row: Hamburger Left | Centered MORT Logo | Search & Cart Right */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 sm:py-3.5 flex items-center justify-between relative">
           
-          {/* Left: Mobile Menu Toggle (mobile) & Nav Links (desktop) */}
-          <div className="flex items-center gap-6 lg:w-1/3">
+          {/* Left: Mobile Menu Toggle (mobile/tablet & screen widths up to 1195px) & Nav Links (xl screen desktop) */}
+          <div className="flex items-center gap-6 xl:w-1/3">
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden text-white/90 hover:text-white p-1 -ml-1"
+              className="xl:hidden text-white/90 hover:text-white p-1 -ml-1"
               aria-label="Open menu"
             >
               <Menu className="w-5 h-5" />
             </button>
 
-            <nav className="hidden lg:flex items-center gap-8">
+            <nav className="hidden xl:flex items-center gap-8">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
@@ -82,8 +82,8 @@ export const Navbar = () => {
             </nav>
           </div>
 
-          {/* Center: MORT Logo (Slightly reduced size for elegant spacing & centered) */}
-          <div className="flex justify-center lg:w-1/3">
+          {/* Center: MORT Logo */}
+          <div className="flex justify-center xl:w-1/3">
             <Link href="/" className="flex items-center justify-center">
               <div className="relative w-32 sm:w-40 md:w-44 h-7 sm:h-8 md:h-9">
                 <Image
@@ -98,8 +98,8 @@ export const Navbar = () => {
             </Link>
           </div>
 
-          {/* Right Icons: Search & Shopping Bag only (Profile icon moved to side menu) */}
-          <div className="flex items-center justify-end gap-5 sm:gap-6 lg:w-1/3">
+          {/* Right Icons: Search & Shopping Bag only */}
+          <div className="flex items-center justify-end gap-5 sm:gap-6 xl:w-1/3">
             <button
               onClick={() => setSearchOpen(!searchOpen)}
               className="text-[#E0E0E0] hover:text-white transition-colors p-1"
