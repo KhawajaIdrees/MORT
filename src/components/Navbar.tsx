@@ -39,11 +39,22 @@ export const Navbar = () => {
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled
-            ? "bg-[#050505]/95 border-b border-[#1A1A1A] py-4"
-            : "bg-gradient-to-b from-black/90 via-black/50 to-transparent py-6"
+            ? "bg-[#050505]/95 border-b border-[#1A1A1A]"
+            : "bg-gradient-to-b from-black/95 via-black/70 to-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
+        {/* Top Free Shipping Banner matching Image 2 */}
+        <div className="bg-[#050505] border-b border-[#1A1A1A]/60 py-1.5 px-4 text-center">
+          <Link
+            href="/shop"
+            className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-xs font-sans font-medium tracking-[0.15em] text-[#CCCCCC] hover:text-white uppercase transition-colors"
+          >
+            <span>FREE SHIPPING ON ORDERS OVER $100</span>
+            <ArrowRight className="w-3 h-3 text-[#CCCCCC]" />
+          </Link>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 sm:py-4 flex items-center justify-between">
           
           {/* Mobile Menu Toggle */}
           <button

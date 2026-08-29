@@ -17,7 +17,42 @@ export default async function HomePage() {
       {/* 1. Hero Section matching Image 2 */}
       <Hero />
 
-      {/* 2. Guarantees Bar matching Image 2 */}
+      {/* 2. Quick Navigation Boxes matching Image 2 (NEW ARRIVALS | BEST SELLERS | EXPLORE ALL) */}
+      <section className="bg-[#050505] border-b border-[#1A1A1A]">
+        <div className="max-w-7xl mx-auto grid grid-cols-3">
+          <Link
+            href="/shop?category=new-arrivals"
+            className="py-5 sm:py-6 px-3 sm:px-6 border-r border-[#1A1A1A] flex flex-col items-start justify-center group hover:bg-white/[0.04] transition-colors"
+          >
+            <span className="font-sans text-[10px] sm:text-xs font-bold tracking-[0.15em] text-white uppercase">
+              NEW ARRIVALS
+            </span>
+            <ArrowRight className="w-3.5 h-3.5 text-white/80 group-hover:text-white mt-2 sm:mt-3 transition-transform group-hover:translate-x-1" />
+          </Link>
+
+          <Link
+            href="/shop?category=best-sellers"
+            className="py-5 sm:py-6 px-3 sm:px-6 border-r border-[#1A1A1A] flex flex-col items-start justify-center group hover:bg-white/[0.04] transition-colors"
+          >
+            <span className="font-sans text-[10px] sm:text-xs font-bold tracking-[0.15em] text-white uppercase">
+              BEST SELLERS
+            </span>
+            <ArrowRight className="w-3.5 h-3.5 text-white/80 group-hover:text-white mt-2 sm:mt-3 transition-transform group-hover:translate-x-1" />
+          </Link>
+
+          <Link
+            href="/shop"
+            className="py-5 sm:py-6 px-3 sm:px-6 flex flex-col items-start justify-center group hover:bg-white/[0.04] transition-colors"
+          >
+            <span className="font-sans text-[10px] sm:text-xs font-bold tracking-[0.15em] text-white uppercase">
+              EXPLORE ALL
+            </span>
+            <ArrowRight className="w-3.5 h-3.5 text-white/80 group-hover:text-white mt-2 sm:mt-3 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
+      </section>
+
+      {/* 3. Guarantees Bar */}
       <GuaranteesBar />
 
       {/* 3. Category Section matching Image 2 */}
