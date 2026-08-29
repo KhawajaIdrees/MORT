@@ -249,17 +249,17 @@ export default function CartPage() {
               </div>
             </div>
 
-            <Button
-              variant="primary"
-              size="lg"
-              fullWidth
-              isLoading={isCheckingOut}
-              onClick={handleCheckout}
-              className="gap-2"
-            >
-              <Lock className="w-3.5 h-3.5" />
-              <span>COMPLETE PURCHASE ({formatPrice(grandTotal)})</span>
-            </Button>
+            <Link href="/checkout" className="block w-full">
+              <Button
+                variant="primary"
+                size="lg"
+                fullWidth
+                className="gap-2 py-4"
+              >
+                <Lock className="w-3.5 h-3.5" />
+                <span>PROCEED TO CHECKOUT ({formatPrice(grandTotal)})</span>
+              </Button>
+            </Link>
           </div>
         </div>
       )}

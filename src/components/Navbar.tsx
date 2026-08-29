@@ -15,11 +15,14 @@ export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [mounted, setMounted] = useState(false);
 
   const { items, isOpen, toggleCart, closeCart, removeItem, updateQuantity, getCartTotal, getItemCount } = useCartStore();
   const itemCount = getItemCount();
+  const displayCount = mounted ? itemCount : 0;
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
@@ -95,8 +98,11 @@ export const Navbar = () => {
                 aria-label="Bag"
               >
                 <ShoppingBag className="w-5 h-5 stroke-[1.75]" />
-                <span className="absolute -top-1 -right-1.5 w-[17px] h-[17px] rounded-full bg-white text-black font-sans font-bold text-[9px] leading-none flex items-center justify-center border border-black z-10 shadow-sm">
-                  {itemCount}
+                <span
+                  suppressHydrationWarning
+                  className="absolute -top-1 -right-1.5 w-[17px] h-[17px] rounded-full bg-white text-black font-sans font-bold text-[9px] leading-none flex items-center justify-center border border-black z-10 shadow-sm"
+                >
+                  {displayCount}
                 </span>
               </button>
             </div>
@@ -162,8 +168,11 @@ export const Navbar = () => {
                 aria-label="Bag"
               >
                 <ShoppingBag className="w-5 h-5 stroke-[1.75]" />
-                <span className="absolute -top-1 -right-1.5 w-[17px] h-[17px] rounded-full bg-white text-black font-sans font-bold text-[9px] leading-none flex items-center justify-center border border-black z-10 shadow-sm">
-                  {itemCount}
+                <span
+                  suppressHydrationWarning
+                  className="absolute -top-1 -right-1.5 w-[17px] h-[17px] rounded-full bg-white text-black font-sans font-bold text-[9px] leading-none flex items-center justify-center border border-black z-10 shadow-sm"
+                >
+                  {displayCount}
                 </span>
               </button>
             </div>
