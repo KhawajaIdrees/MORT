@@ -24,14 +24,14 @@ const slidesData: SlideData[] = [
   {
     id: "02",
     image: "/images/hero/hero-02.jpg",
-    mobileImage: "/images/hero/hero-02.jpg",
+    mobileImage: "/images/hero/hero-mobile-02.png",
     tagline: "ARCHITECTURAL STATEMENT.",
     subtitle: "Brutalist aesthetics. Heavyweight garments.\nEngineered with raw structural precision.",
   },
   {
     id: "03",
     image: "/images/hero/hero-03.jpg",
-    mobileImage: "/images/hero/hero-03.jpg",
+    mobileImage: "/images/hero/hero-mobile-03.png",
     tagline: "LIMITED DROPS.",
     subtitle: "Dark minimalist techwear.\nExclusive releases crafted for the bold.",
   },
@@ -123,8 +123,8 @@ export const Hero = () => {
           </div>
         </div>
 
-        {/* Far Right Vertical Slide Indicator (Desktop) */}
-        <div className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 flex-col items-center space-y-4 text-xs font-sans text-[#A0A0A0] z-30">
+        {/* Far Right Vertical Slide Indicator (Tablet & Desktop with right inset spacing) */}
+        <div className="hidden sm:flex absolute right-4 sm:right-6 lg:right-12 top-1/2 -translate-y-1/2 flex-col items-center space-y-4 text-xs font-sans text-[#A0A0A0] z-30">
           {slidesData.map((slide, index) => {
             const isActive = index === currentSlideIndex;
             return (
@@ -150,33 +150,31 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* Mobile Horizontal Slide Indicator at Bottom of Hero matching Image 2 */}
-      <div className="flex sm:hidden items-center justify-between w-full max-w-[280px] mx-auto z-30 pt-6 pb-2 px-2">
-        <button
-          onClick={() => setCurrentSlideIndex(0)}
-          className={`font-sans tracking-widest text-xs transition-colors ${
-            currentSlideIndex === 0 ? "text-white font-bold" : "text-[#777777]"
-          }`}
-        >
-          01
-        </button>
-        <div className="flex-1 mx-4 h-[1px] bg-white/30 relative">
-          <div
-            className="absolute top-0 h-full bg-white transition-all duration-500"
-            style={{
-              left: `${(currentSlideIndex / (slidesData.length - 1)) * 66}%`,
-              width: "33%",
-            }}
-          />
-        </div>
-        <button
-          onClick={() => setCurrentSlideIndex(slidesData.length - 1)}
-          className={`font-sans tracking-widest text-xs transition-colors ${
-            currentSlideIndex === slidesData.length - 1 ? "text-white font-bold" : "text-[#777777]"
-          }`}
-        >
-          03
-        </button>
+      {/* Mobile Horizontal Slide Indicator (01 - 02 - 03) at Bottom of Hero */}
+      <div className="flex sm:hidden items-center justify-between w-full max-w-[280px] mx-auto z-30 pt-6 pb-2 px-4">
+        {slidesData.map((slide, index) => {
+          const isActive = index === currentSlideIndex;
+          return (
+            <React.Fragment key={slide.id}>
+              <button
+                onClick={() => setCurrentSlideIndex(index)}
+                className={`font-sans tracking-widest text-xs px-2 py-1 transition-all duration-300 ${
+                  isActive ? "text-white font-bold text-sm scale-110" : "text-[#777777] hover:text-white"
+                }`}
+                aria-label={`Go to slide ${slide.id}`}
+              >
+                {slide.id}
+              </button>
+              {index < slidesData.length - 1 && (
+                <div className="flex-1 mx-2 h-[1px] bg-white/30 relative">
+                  {currentSlideIndex > index && (
+                    <div className="absolute inset-0 bg-white" />
+                  )}
+                </div>
+              )}
+            </React.Fragment>
+          );
+        })}
       </div>
     </section>
   );
