@@ -34,103 +34,107 @@ export const Navbar = () => {
     { name: "CONTACT", href: "/contact" },
   ];
 
+  const mobileNavLinks = [
+    { name: "SHOP", href: "/shop" },
+    { name: "COLLECTIONS", href: "/collections" },
+    { name: "ABOUT", href: "/about" },
+    { name: "CONTACT", href: "/contact" },
+    { name: "ACCOUNT / LOGIN", href: "/contact" },
+  ];
+
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled
             ? "bg-[#050505]/95 border-b border-[#1A1A1A]"
-            : "bg-gradient-to-b from-black/95 via-black/70 to-transparent"
+            : "bg-gradient-to-b from-black/95 via-black/75 to-transparent"
         }`}
       >
-        {/* Top Free Shipping Banner matching Image 2 */}
-        <div className="bg-[#050505] border-b border-[#1A1A1A]/60 py-1.5 px-4 text-center">
-          <Link
-            href="/shop"
-            className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-xs font-sans font-medium tracking-[0.15em] text-[#CCCCCC] hover:text-white uppercase transition-colors"
-          >
-            <span>FREE SHIPPING ON ORDERS OVER $100</span>
-            <ArrowRight className="w-3 h-3 text-[#CCCCCC]" />
-          </Link>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 sm:py-4 flex items-center justify-between">
+        {/* Main Navbar Row: Hamburger Left | Centered MORT Logo | Search & Cart Right */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 sm:py-3.5 flex items-center justify-between relative">
           
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="lg:hidden text-white/90 hover:text-white"
-            aria-label="Open menu"
-          >
-            <Menu className="w-6 h-6" />
-          </button>
+          {/* Left: Mobile Menu Toggle (mobile) & Nav Links (desktop) */}
+          <div className="flex items-center gap-6 lg:w-1/3">
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="lg:hidden text-white/90 hover:text-white p-1 -ml-1"
+              aria-label="Open menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
 
-          {/* MORT Logo - Prominent & exact size matching screenshot */}
-          <Link href="/" className="flex items-center">
-            <div className="relative w-44 sm:w-52 md:w-56 h-9 sm:h-10 md:h-11">
-              <Image
-                src="/logo/mort-logo.png"
-                alt="MORT"
-                fill
-                priority
-                unoptimized
-                className="object-contain object-left"
-              />
-            </div>
-          </Link>
+            <nav className="hidden lg:flex items-center gap-8">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`font-sans text-xs font-semibold tracking-[0.22em] transition-colors py-1 ${
+                      isActive ? "text-white" : "text-[#D0D0D0] hover:text-white"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
 
-          {/* Nav Links Center */}
-          <nav className="hidden lg:flex items-center gap-12">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`font-sans text-xs font-semibold tracking-[0.25em] transition-colors py-1 ${
-                    isActive ? "text-white" : "text-[#D0D0D0] hover:text-white"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
-          </nav>
+          {/* Center: MORT Logo (Slightly reduced size for elegant spacing & centered) */}
+          <div className="flex justify-center lg:w-1/3">
+            <Link href="/" className="flex items-center justify-center">
+              <div className="relative w-32 sm:w-40 md:w-44 h-7 sm:h-8 md:h-9">
+                <Image
+                  src="/logo/mort-logo.png"
+                  alt="MORT"
+                  fill
+                  priority
+                  unoptimized
+                  className="object-contain object-center"
+                />
+              </div>
+            </Link>
+          </div>
 
-          {/* Right Icons: Search, User/Account, Shopping Bag with badge */}
-          <div className="flex items-center gap-6">
+          {/* Right Icons: Search & Shopping Bag only (Profile icon moved to side menu) */}
+          <div className="flex items-center justify-end gap-5 sm:gap-6 lg:w-1/3">
             <button
               onClick={() => setSearchOpen(!searchOpen)}
-              className="text-[#E0E0E0] hover:text-white transition-colors"
+              className="text-[#E0E0E0] hover:text-white transition-colors p-1"
               aria-label="Search"
             >
               <Search className="w-4.5 h-4.5 stroke-[1.75]" />
             </button>
 
-            <Link
-              href="/contact"
-              className="text-[#E0E0E0] hover:text-white transition-colors"
-              aria-label="Account"
-            >
-              <User className="w-5 h-5 stroke-[1.75]" />
-            </Link>
-
             <button
               onClick={toggleCart}
-              className="relative text-[#E0E0E0] hover:text-white transition-colors flex items-center p-0.5"
+              className="relative text-[#E0E0E0] hover:text-white transition-colors flex items-center p-1"
               aria-label="Bag"
             >
               <ShoppingBag className="w-5 h-5 stroke-[1.75]" />
-              <span className="absolute -top-1.5 -right-2 w-[18px] h-[18px] rounded-full bg-white text-black font-sans font-bold text-[10px] leading-none flex items-center justify-center border border-black z-10 shadow-sm">
+              <span className="absolute -top-1 -right-1.5 w-[17px] h-[17px] rounded-full bg-white text-black font-sans font-bold text-[9px] leading-none flex items-center justify-center border border-black z-10 shadow-sm">
                 {itemCount}
               </span>
             </button>
           </div>
         </div>
 
+        {/* Slim Announcement Bar Directly Below Navbar */}
+        <div className="bg-[#080808] border-y border-[#1A1A1A]/80 py-1.5 px-4 text-center flex items-center justify-center">
+          <Link
+            href="/shop"
+            className="inline-flex items-center justify-center gap-2 text-[10px] sm:text-xs font-sans font-medium tracking-[0.18em] text-[#B0B0B0] hover:text-white uppercase transition-colors"
+          >
+            <span>FREE SHIPPING ON ORDERS OVER $100</span>
+            <ArrowRight className="w-3 h-3 text-[#B0B0B0]" />
+          </Link>
+        </div>
+
         {/* Search Overlay */}
         {searchOpen && (
-          <div className="w-full bg-[#0F0F0F]/95 backdrop-blur-md border-b border-[#1A1A1A] py-4 px-6 mt-3">
+          <div className="w-full bg-[#0F0F0F]/95 backdrop-blur-md border-b border-[#1A1A1A] py-4 px-6">
             <div className="max-w-3xl mx-auto relative flex items-center">
               <Search className="absolute left-4 w-4 h-4 text-[#A0A0A0]" />
               <input
@@ -159,7 +163,7 @@ export const Navbar = () => {
           <div className="relative w-4/5 max-w-sm bg-[#050505] border-r border-[#1A1A1A] h-full p-8 flex flex-col justify-between z-10">
             <div>
               <div className="flex items-center justify-between pb-6 border-b border-[#1A1A1A]">
-                <div className="relative w-36 h-9">
+                <div className="relative w-32 h-8">
                   <Image src="/logo/mort-logo.png" alt="MORT" fill unoptimized className="object-contain" />
                 </div>
                 <button onClick={() => setMobileMenuOpen(false)} className="text-[#A0A0A0] hover:text-white">
@@ -168,12 +172,12 @@ export const Navbar = () => {
               </div>
 
               <nav className="mt-8 flex flex-col gap-6">
-                {navLinks.map((link) => (
+                {mobileNavLinks.map((link) => (
                   <Link
                     key={link.name}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="font-sans text-base font-medium tracking-widest text-white hover:text-[#C2B092] transition-colors flex items-center justify-between"
+                    className="font-sans text-sm font-medium tracking-widest text-white hover:text-[#C2B092] transition-colors flex items-center justify-between"
                   >
                     <span>{link.name}</span>
                     <ArrowRight className="w-4 h-4 text-[#A0A0A0]" />

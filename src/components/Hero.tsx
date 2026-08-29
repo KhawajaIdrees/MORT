@@ -95,8 +95,8 @@ export const Hero = () => {
             {activeSlide.tagline}
           </span>
 
-          {/* EXACT MORT Wordmark Logo */}
-          <div className="relative w-64 sm:w-[440px] md:w-[520px] h-20 sm:h-28 md:h-32 -ml-1">
+          {/* EXACT MORT Wordmark Logo (Balanced sizing matching Navbar) */}
+          <div className="relative w-44 sm:w-[320px] md:w-[380px] h-12 sm:h-20 md:h-24 -ml-1">
             <Image
               src="/logo/mort-logo.png"
               alt="MORT"
