@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Category } from "@/data/products";
+import type { Category } from "@/types";
 
 interface CategoryCardProps {
   category: Category;

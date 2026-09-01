@@ -7,32 +7,40 @@ import { useRouter } from "next/navigation";
 import { createSupabaseBrowser } from "@/lib/supabase/browser";
 import { ArrowRight, Eye, EyeOff, ShieldCheck, Lock } from "lucide-react";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const router = useRouter();
   const supabase = createSupabaseBrowser();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
+    fullName: "",
     email: "",
     password: "",
-    rememberMe: false,
+    confirmPassword: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    setLoading(true);
 
-    const { error: signInError } = await supabase.auth.signInWithPassword({
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    setLoading(true);
+    const { error: signUpError } = await supabase.auth.signUp({
       email: formData.email,
       password: formData.password,
+      options: {
+        data: { full_name: formData.fullName },
+      },
     });
-
     setLoading(false);
 
-    if (signInError) {
-      setError(signInError.message);
+    if (signUpError) {
+      setError(signUpError.message);
       return;
     }
 
@@ -59,7 +67,7 @@ export default function LoginPage() {
             </div>
           </Link>
           <p className="font-sans text-xs text-[#A0A0A0] tracking-[0.25em] uppercase mt-2">
-            AUTHENTICATE CLIENT ACCESS
+            CREATE MORT ACCOUNT
           </p>
         </div>
 
@@ -67,16 +75,16 @@ export default function LoginPage() {
           <div className="grid grid-cols-2 border-b border-[#1A1A1A] mb-8 pb-3">
             <Link
               href="/login"
-              className="font-sans text-xs font-bold tracking-[0.2em] uppercase pb-2 text-white text-center relative"
+              className="font-sans text-xs font-bold tracking-[0.2em] uppercase pb-2 text-[#666666] hover:text-[#A0A0A0] text-center transition-all"
             >
               SIGN IN
-              <div className="absolute bottom-[-13px] left-0 right-0 h-[2px] bg-white" />
             </Link>
             <Link
               href="/signup"
-              className="font-sans text-xs font-bold tracking-[0.2em] uppercase pb-2 text-[#666666] hover:text-[#A0A0A0] text-center transition-all"
+              className="font-sans text-xs font-bold tracking-[0.2em] uppercase pb-2 text-white text-center relative"
             >
               CREATE ACCOUNT
+              <div className="absolute bottom-[-13px] left-0 right-0 h-[2px] bg-white" />
             </Link>
           </div>
 
@@ -87,6 +95,20 @@ export default function LoginPage() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block font-sans text-[11px] font-semibold text-[#A0A0A0] tracking-[0.2em] uppercase mb-2">
+                FULL NAME
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="Enter full name"
+                value={formData.fullName}
+                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                className="w-full bg-[#050505] border border-[#222222] px-4 py-3 text-xs text-white font-sans tracking-wider focus:outline-none focus:border-white/60 transition-colors placeholder:text-[#444444]"
+              />
+            </div>
+
             <div>
               <label className="block font-sans text-[11px] font-semibold text-[#A0A0A0] tracking-[0.2em] uppercase mb-2">
                 EMAIL ADDRESS
@@ -102,18 +124,14 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <div className="flex justify-between items-center mb-2">
-                <label className="block font-sans text-[11px] font-semibold text-[#A0A0A0] tracking-[0.2em] uppercase">
-                  PASSWORD
-                </label>
-                <a href="#forgot" className="font-sans text-[10px] text-[#888888] hover:text-white tracking-widest uppercase transition-colors">
-                  FORGOT?
-                </a>
-              </div>
+              <label className="block font-sans text-[11px] font-semibold text-[#A0A0A0] tracking-[0.2em] uppercase mb-2">
+                PASSWORD
+              </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   required
+                  minLength={6}
                   placeholder="••••••••••••"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
@@ -130,17 +148,18 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 pt-1">
-              <input
-                type="checkbox"
-                id="remember"
-                checked={formData.rememberMe}
-                onChange={(e) => setFormData({ ...formData, rememberMe: e.target.checked })}
-                className="w-3.5 h-3.5 accent-white bg-[#050505] border-[#222222]"
-              />
-              <label htmlFor="remember" className="font-sans text-[11px] text-[#A0A0A0] tracking-wider cursor-pointer">
-                REMEMBER SESSION
+            <div>
+              <label className="block font-sans text-[11px] font-semibold text-[#A0A0A0] tracking-[0.2em] uppercase mb-2">
+                CONFIRM PASSWORD
               </label>
+              <input
+                type="password"
+                required
+                placeholder="••••••••••••"
+                value={formData.confirmPassword}
+                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                className="w-full bg-[#050505] border border-[#222222] px-4 py-3 text-xs text-white font-sans tracking-wider focus:outline-none focus:border-white/60 transition-colors placeholder:text-[#444444]"
+              />
             </div>
 
             <div className="pt-4">
@@ -149,16 +168,16 @@ export default function LoginPage() {
                 disabled={loading}
                 className="w-full py-4 bg-white text-[#050505] hover:bg-[#E0E0E0] font-sans text-xs font-bold tracking-[0.2em] uppercase flex items-center justify-center gap-3 transition-colors shadow-2xl disabled:opacity-50"
               >
-                <span>{loading ? "SIGNING IN..." : "SIGN IN"}</span>
+                <span>{loading ? "CREATING ACCOUNT..." : "CREATE ACCOUNT"}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </form>
 
           <p className="mt-6 text-center font-sans text-[11px] text-[#888888] tracking-wider uppercase">
-            New to MORT?{" "}
-            <Link href="/signup" className="text-white hover:underline">
-              Create account
+            Already have an account?{" "}
+            <Link href="/login" className="text-white hover:underline">
+              Sign in
             </Link>
           </p>
 

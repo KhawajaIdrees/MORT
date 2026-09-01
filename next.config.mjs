@@ -8,7 +8,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "cdn.sanity.io",
+        hostname: "*.supabase.co",
       },
     ],
   },

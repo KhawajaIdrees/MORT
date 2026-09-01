@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Product } from "@/data/products";
+import type { Product } from "@/types";
 import ProductCard from "./ProductCard";
 
 interface ProductGridProps {

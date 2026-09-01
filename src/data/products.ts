@@ -1,40 +1,6 @@
-export interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  price: number;
-  originalPrice?: number;
-  description: string;
-  category: "hoodies" | "tshirts" | "pants" | "accessories";
-  collection: "oblivion" | "cyber-goth" | "matrix-essentials";
-  images: string[];
-  sizes: string[];
-  colors: { name: string; hex: string }[];
-  details: string[];
-  care: string[];
-  isNew?: boolean;
-  isFeatured?: boolean;
-  rating: number;
-  reviewsCount: number;
-}
+import type { Category, Collection, Product } from "@/types";
 
-export interface Category {
-  id: string;
-  name: string;
-  slug: string;
-  count: string;
-  image: string;
-}
-
-export interface Collection {
-  id: string;
-  title: string;
-  slug: string;
-  tagline: string;
-  description: string;
-  image: string;
-  itemCount: number;
-}
+export type { Category, Collection, Product };
 
 export const CATEGORIES: Category[] = [
   {
@@ -101,6 +67,8 @@ export const PRODUCTS: Product[] = [
     isFeatured: true,
     rating: 4.9,
     reviewsCount: 42,
+    stock: 37,
+    totalStock: 100,
   },
   {
     id: "prod-2",
@@ -129,6 +97,8 @@ export const PRODUCTS: Product[] = [
     isFeatured: true,
     rating: 4.8,
     reviewsCount: 38,
+    stock: 37,
+    totalStock: 100,
   },
   {
     id: "prod-3",
@@ -154,6 +124,8 @@ export const PRODUCTS: Product[] = [
     isFeatured: true,
     rating: 5.0,
     reviewsCount: 29,
+    stock: 37,
+    totalStock: 100,
   },
   {
     id: "prod-4",
@@ -179,38 +151,49 @@ export const PRODUCTS: Product[] = [
     isFeatured: true,
     rating: 4.9,
     reviewsCount: 64,
+    stock: 37,
+    totalStock: 100,
   },
 ];
 
 export const COLLECTIONS: Collection[] = [
   {
     id: "col-1",
+    name: "OBLIVION ARCHIVE",
+    number: "01",
     title: "OBLIVION ARCHIVE",
     slug: "oblivion",
     tagline: "RESTRAINT & HEAVYWEIGHT SILHOUETTES",
     description:
       "Drop 04 features 500GSM French Terry hoodies, 280GSM heavy jersey tees, and tactical utility cargo pants designed with purpose.",
     image: "/images/layout/oblivion-archive.png",
+    coverImage: "/images/layout/oblivion-archive.png",
     itemCount: 10,
   },
   {
     id: "col-2",
+    name: "CYBER-GOTH '26",
+    number: "02",
     title: "CYBER-GOTH '26",
     slug: "cyber-goth",
     tagline: "INDUSTRIAL HARDWARE & UTILITY",
     description:
       "Modular outerwear and magnetic buckle accessories built for urban exploration.",
     image: "/images/layout/cyber-goth.jpg",
+    coverImage: "/images/layout/cyber-goth.jpg",
     itemCount: 8,
   },
   {
     id: "col-3",
+    name: "MATRIX ESSENTIALS",
+    number: "03",
     title: "MATRIX ESSENTIALS",
     slug: "matrix-essentials",
     tagline: "PURE MONOCHROME CORE",
     description:
       "Minimalist oversized essential tees and caps crafted for daily wear.",
     image: "/images/layout/cat-tshirts.png",
+    coverImage: "/images/layout/cat-tshirts.png",
     itemCount: 15,
   },
 ];

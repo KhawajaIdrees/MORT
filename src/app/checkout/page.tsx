@@ -61,18 +61,55 @@ export default function CheckoutPage() {
     setTimeout(() => setCopiedText(null), 2000);
   };
 
-  const handleSubmitOrder = (e: React.FormEvent) => {
+  const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     const generatedId = `MORT-${Math.floor(100000 + Math.random() * 900000)}`;
-    setOrderId(generatedId);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          total: grandTotal,
+          status: paymentMethod === "cod" ? "pending" : "paid",
+          payment_intent_id: transactionId || generatedId,
+          shipping_address: {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            phone: formData.phone,
+            address: formData.address,
+            apartment: formData.apartment,
+            city: formData.city,
+            country: formData.country,
+            postalCode: formData.postalCode,
+          },
+          items: items.map((item) => ({
+            productId: item.product.id,
+            name: item.product.name,
+            slug: item.product.slug,
+            price: item.product.price,
+            quantity: item.quantity,
+            selectedSize: item.selectedSize,
+            selectedColor: item.selectedColor,
+            image: item.product.images[0],
+          })),
+        }),
+      });
+
+      const data = await response.json();
+      setOrderId(data.id || generatedId);
       setOrderComplete(true);
       clearCart();
-    }, 2000);
+    } catch {
+      setOrderId(generatedId);
+      setOrderComplete(true);
+      clearCart();
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (orderComplete) {

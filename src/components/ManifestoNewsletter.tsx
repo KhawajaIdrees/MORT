@@ -1,22 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Instagram, Twitter, Youtube } from "lucide-react";
+import WaitlistForm from "@/components/WaitlistForm";
 
 export const ManifestoNewsletter = () => {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setSubmitted(true);
-      setEmail("");
-      setTimeout(() => setSubmitted(false), 4000);
-    }
-  };
 
   return (
     <section className="bg-[#050505] border-t border-[#1A1A1A] py-16">
@@ -72,29 +62,7 @@ export const ManifestoNewsletter = () => {
               Get early access to new drops and exclusive offers.
             </p>
 
-            <form onSubmit={handleSubscribe} className="mt-6 space-y-3">
-              <div className="flex flex-col sm:flex-row gap-2">
-                <input
-                  type="email"
-                  required
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 bg-[#050505] border border-[#222222] px-4 py-3 text-xs text-white font-sans placeholder:text-[#666666] focus:outline-none focus:border-white/40"
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-[#C2B092] text-[#050505] font-sans text-xs font-bold tracking-widest uppercase hover:bg-[#B5A384] transition-colors whitespace-nowrap"
-                >
-                  JOIN NOW
-                </button>
-              </div>
-              {submitted && (
-                <p className="text-xs font-sans text-[#C2B092]">
-                  ✓ You are on the early access list.
-                </p>
-              )}
-            </form>
+            <WaitlistForm />
           </div>
 
           <div className="flex items-center gap-5 pt-4 text-white/70">

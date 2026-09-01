@@ -4,8 +4,9 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { PRODUCTS, Product } from "@/data/products";
+import type { Product } from "@/types";
 import { formatPrice } from "@/lib/utils";
+import { padStock } from "@/lib/mappers";
 import { useCartStore } from "@/store/cartStore";
 import Button from "@/components/ui/Button";
 import ProductCard from "@/components/ProductCard";
@@ -21,6 +22,8 @@ export default function ProductDetailPage() {
   const slug = params?.slug as string;
 
   const [product, setProduct] = useState<Product | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+  const [error, setError] = useState("");
   const [activeImage, setActiveImage] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedColor, setSelectedColor] = useState<{ name: string; hex: string }>({
@@ -34,16 +37,49 @@ export default function ProductDetailPage() {
   const addItem = useCartStore((state) => state.addItem);
 
   useEffect(() => {
-    const found = PRODUCTS.find((p) => p.slug === slug) || PRODUCTS[0];
-    if (found) {
-      setProduct(found);
-      setActiveImage(found.images[0]);
-      setSelectedSize(found.sizes[0] || "M");
-      if (found.colors && found.colors.length > 0) {
-        setSelectedColor(found.colors[0]);
+    const load = async () => {
+      try {
+        const [productRes, catalogRes] = await Promise.all([
+          fetch(`/api/products/${slug}`),
+          fetch("/api/products"),
+        ]);
+
+        if (!productRes.ok) {
+          setError("PRODUCT NOT FOUND");
+          return;
+        }
+
+        const productData = await productRes.json();
+        const found = productData.product as Product;
+        setProduct(found);
+        setActiveImage(found.images[0]);
+        setSelectedSize(found.sizes[0] || "M");
+        if (found.colors && found.colors.length > 0) {
+          setSelectedColor(found.colors[0]);
+        }
+
+        if (catalogRes.ok) {
+          const catalogData = await catalogRes.json();
+          const catalog = (catalogData.products as Product[]) ?? [];
+          setRelatedProducts(
+            catalog.filter((p) => p.category === found.category && p.id !== found.id).slice(0, 3)
+          );
+        }
+      } catch {
+        setError("UNABLE TO LOAD PRODUCT");
       }
-    }
+    };
+
+    if (slug) load();
   }, [slug]);
+
+  if (error) {
+    return (
+      <div className="pt-36 pb-20 text-center text-[#F5F5F0]">
+        <p className="font-sans text-xs tracking-widest text-[#8A8A8A]">{error}</p>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -59,13 +95,8 @@ export default function ProductDetailPage() {
     setTimeout(() => setAdded(false), 2500);
   };
 
-  const relatedProducts = PRODUCTS.filter(
-    (p) => p.category === product.category && p.id !== product.id
-  ).slice(0, 3);
-
   return (
     <div className="pt-36 pb-28 max-w-7xl mx-auto px-6 lg:px-12">
-      {/* Breadcrumbs */}
       <nav className="flex items-center gap-2 text-xs font-sans text-[#8A8A8A] uppercase tracking-widest mb-10">
         <Link href="/" className="hover:text-[#F5F5F0] transition-colors">HOME</Link>
         <ChevronRight className="w-3 h-3 text-[#8A8A8A]" />
@@ -74,9 +105,7 @@ export default function ProductDetailPage() {
         <span className="text-[#F5F5F0] font-medium truncate max-w-[200px]">{product.name}</span>
       </nav>
 
-      {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-24">
-        {/* Photography Gallery: 7 Cols */}
         <div className="lg:col-span-7 space-y-4">
           <div className="relative aspect-[3/4] w-full bg-[#151515] border border-[#262626] overflow-hidden">
             <Image
@@ -88,7 +117,6 @@ export default function ProductDetailPage() {
             />
           </div>
 
-          {/* Thumbnails */}
           {product.images.length > 1 && (
             <div className="flex gap-4 overflow-x-auto pb-2">
               {product.images.map((img, idx) => (
@@ -108,7 +136,6 @@ export default function ProductDetailPage() {
           )}
         </div>
 
-        {/* Product Information: 5 Cols */}
         <div className="lg:col-span-5 space-y-8 sticky top-28">
           <div>
             <span className="text-[#8A8A8A] font-display text-xs tracking-[0.25em] uppercase block mb-1">
@@ -118,7 +145,6 @@ export default function ProductDetailPage() {
               {product.name}
             </h1>
 
-            {/* Price */}
             <div className="mt-4 flex items-baseline gap-4">
               <span className="font-display text-2xl font-bold text-[#F5F5F0]">
                 {formatPrice(product.price)}
@@ -130,12 +156,39 @@ export default function ProductDetailPage() {
               )}
             </div>
 
+            <p className="mt-3 text-xs font-display tracking-[0.2em] text-[#B8A47E] uppercase">
+              STOCK {padStock(product.stock)} / {padStock(product.totalStock)}
+            </p>
+
             <p className="mt-4 text-xs sm:text-sm text-[#8A8A8A] font-sans leading-relaxed">
               {product.description}
             </p>
           </div>
 
-          {/* Size Selector */}
+          {product.colors.length > 0 && (
+            <div className="space-y-3">
+              <div className="flex justify-between text-xs font-display tracking-widest text-[#8A8A8A]">
+                <span>SELECT COLOR</span>
+                <span className="text-[#F5F5F0]">{selectedColor.name}</span>
+              </div>
+              <div className="flex gap-3">
+                {product.colors.map((color) => (
+                  <button
+                    key={color.name}
+                    onClick={() => setSelectedColor(color)}
+                    className={`w-8 h-8 border ${
+                      selectedColor.name === color.name
+                        ? "border-[#F5F5F0]"
+                        : "border-[#262626]"
+                    }`}
+                    style={{ backgroundColor: color.hex }}
+                    aria-label={color.name}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="space-y-3">
             <div className="flex justify-between text-xs font-display tracking-widest text-[#8A8A8A]">
               <span>SELECT SIZE</span>
@@ -158,7 +211,6 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Quantity & CTA */}
           <div className="space-y-4 pt-2">
             <div className="flex gap-4">
               <div className="flex items-center border border-[#262626] bg-[#151515] px-3 py-3">
@@ -190,7 +242,6 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Accordion Information */}
           <div className="border-t border-[#262626] pt-4 space-y-4">
             <div className="border-b border-[#262626] pb-3">
               <button
@@ -229,7 +280,6 @@ export default function ProductDetailPage() {
         </div>
       </div>
 
-      {/* Related Products */}
       {relatedProducts.length > 0 && (
         <section className="border-t border-[#262626] pt-16">
           <h2 className="font-display text-2xl font-bold text-[#F5F5F0] tracking-tight uppercase mb-8">
