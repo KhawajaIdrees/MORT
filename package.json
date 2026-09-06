@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "seed": "npx --yes tsx src/lib/seed.ts"
-  },
+  "dev": "next dev -p 3000",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint",
+  "seed": "npx tsx src/lib/seed.ts"
+},
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.15.0",
     "@supabase/ssr": "^0.12.5",

@@ -5,6 +5,8 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import type { Product } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 interface ShopPageProps {
   searchParams: {
     category?: string;

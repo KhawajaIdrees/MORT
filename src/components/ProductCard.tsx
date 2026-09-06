@@ -15,7 +15,11 @@ interface ProductCardProps {
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [added, setAdded] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
+
+  const primaryImage = product.images[0] ?? "/images/layout/prod-hoodie.png";
+  const secondaryImage = product.images[1] ?? primaryImage;
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -26,11 +30,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <div className="group relative bg-[#0F0F0F] border border-[#1A1A1A] flex flex-col transition-colors hover:border-white/30">
+    <div
+      className="group relative bg-[#0F0F0F] border border-[#1A1A1A] flex flex-col transition-colors hover:border-white/30"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {/* Product Image Container */}
       <Link href={`/product/${product.slug}`} className="relative aspect-square w-full bg-[#050505] overflow-hidden block">
         <Image
-          src={product.images[0]}
+          src={isHovered ? secondaryImage : primaryImage}
           alt={product.name}
           fill
           unoptimized

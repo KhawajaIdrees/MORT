@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   description: "MORT is an independent streetwear brand. Premium 500GSM hoodies, technical cargos, acid-wash graphics, and utility gear.",
   keywords: ["streetwear", "MORT", "heavyweight hoodie", "cargo pants", "techwear", "gothic streetwear"],
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
     apple: "/favicon.png",
   },
   openGraph: {
@@ -28,8 +28,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <head>
         <link rel="icon" href="/favicon.png?v=2" type="image/png" />
-        <link rel="shortcut icon" href="/favicon.ico?v=2" />
-        <link rel="apple-touch-icon" href="/favicon.png?v=2" />
+        <link rel="apple-touch-icon" href="/favicon.png?v=2" type="image/png" />
       </head>
       <body className="bg-background text-white min-h-screen flex flex-col antialiased selection:bg-primary selection:text-white">
         <Navbar />

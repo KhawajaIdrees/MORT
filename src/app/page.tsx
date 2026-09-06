@@ -10,6 +10,8 @@ import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Product } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   let products: Product[] = [];
 
