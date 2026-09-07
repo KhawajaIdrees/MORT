@@ -1,4 +1,5 @@
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { PRODUCTS } from "@/data/products";
 import { mapCollection, mapProduct } from "@/lib/mappers";
 import type { Collection, CollectionRow, Product, ProductRow } from "@/types";
 
@@ -9,7 +10,12 @@ export async function fetchProducts(): Promise<Product[]> {
     .order("created_at", { ascending: true });
 
   if (error) throw error;
-  return ((data ?? []) as ProductRow[]).map(mapProduct);
+  const databaseProducts = ((data ?? []) as ProductRow[]).map(mapProduct);
+  const databaseSlugs = new Set(databaseProducts.map((product) => product.slug));
+  return [
+    ...databaseProducts,
+    ...PRODUCTS.filter((product) => !databaseSlugs.has(product.slug)),
+  ];
 }
 
 export async function fetchProductBySlug(slug: string): Promise<Product | null> {
@@ -20,7 +26,7 @@ export async function fetchProductBySlug(slug: string): Promise<Product | null> 
     .maybeSingle();
 
   if (error) throw error;
-  return data ? mapProduct(data as ProductRow) : null;
+  return data ? mapProduct(data as ProductRow) : PRODUCTS.find((product) => product.slug === slug) ?? null;
 }
 
 export async function fetchCollections(): Promise<Collection[]> {
