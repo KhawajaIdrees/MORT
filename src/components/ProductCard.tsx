@@ -19,7 +19,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const addItem = useCartStore((state) => state.addItem);
 
   const primaryImage = product.images[0] ?? "/images/layout/prod-hoodie.png";
-  const secondaryImage = product.images[1] ?? primaryImage;
+  const secondaryImage = product.slug === "minimal-t-shirt"
+    ? primaryImage
+    : product.images[1] ?? primaryImage;
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();

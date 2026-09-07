@@ -24,13 +24,16 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
     { id: "all", label: "ALL PIECES" },
     { id: "hoodies", label: "HOODIES" },
     { id: "tshirts", label: "TEES" },
+    { id: "polos", label: "POLOS" },
     { id: "pants", label: "BOTTOMS" },
     { id: "accessories", label: "ACCESSORIES" },
   ];
 
   const filteredProducts = products.filter((p) => {
     if (activeCategory === "all") return true;
-    return p.category === activeCategory;
+    const normalizedCategory = p.category.toLowerCase().replace(/[\s_-]+/g, "");
+    return normalizedCategory === activeCategory ||
+      (activeCategory === "polos" && normalizedCategory.startsWith("polo"));
   });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {

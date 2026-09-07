@@ -95,6 +95,20 @@ export default function ProductDetailPage() {
     setTimeout(() => setAdded(false), 2500);
   };
 
+  const handleColorSelect = (color: { name: string; hex: string }, colorIndex: number) => {
+    setSelectedColor(color);
+    const colorName = color.name.toLowerCase();
+    const colorImage = product.images.find((image) => {
+      const imageName = image.toLowerCase();
+      if (colorName.includes("white") || colorName.includes("off-white")) {
+        return imageName.includes("white") || imageName.includes("off-white");
+      }
+      if (colorName.includes("black")) return imageName.includes("black");
+      return false;
+    }) ?? product.images[colorIndex];
+    if (colorImage) setActiveImage(colorImage);
+  };
+
   return (
     <div className="pt-36 pb-28 max-w-7xl mx-auto px-6 lg:px-12">
       <nav className="flex items-center gap-2 text-xs font-sans text-[#8A8A8A] uppercase tracking-widest mb-10">
@@ -172,10 +186,10 @@ export default function ProductDetailPage() {
                 <span className="text-[#F5F5F0]">{selectedColor.name}</span>
               </div>
               <div className="flex gap-3">
-                {product.colors.map((color) => (
+                {product.colors.map((color, colorIndex) => (
                   <button
                     key={color.name}
-                    onClick={() => setSelectedColor(color)}
+                    onClick={() => handleColorSelect(color, colorIndex)}
                     className={`w-8 h-8 border ${
                       selectedColor.name === color.name
                         ? "border-[#F5F5F0]"

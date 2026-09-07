@@ -1,6 +1,25 @@
 import type { Collection, CollectionRow, Product, ProductRow } from "@/types";
 
+function normalizeImagePath(image: string): string {
+  const knownExtensions: Record<string, string> = {
+    "/images/tshirts/White-Polo-shirt": "/images/tshirts/White-Polo-shirt.jpg",
+    "/images/tshirts/Black-Polo-shirt": "/images/tshirts/Black-Polo-shirt.jpg",
+    "/images/tshirts/mort-tshirt-white": "/images/tshirts/mort-tshirt-white.jpg",
+    "/images/tshirts/mort-tshirt-black-flat": "/images/tshirts/mort-tshirt-black-flat.png",
+    "/images/tshirts/minimal-t-shirt": "/images/tshirts/minimal-t-shirt.png",
+  };
+
+  return knownExtensions[image] ?? image;
+}
+
 export function mapProduct(row: ProductRow): Product {
+  const images = row.slug === "minimal-t-shirt"
+    ? [
+        "/images/tshirts/mort-tshirt-black-flat.png",
+        "/images/tshirts/mort-tshirt-white.jpg",
+      ]
+    : (row.images ?? []).map(normalizeImagePath);
+
   return {
     id: row.id,
     name: row.name,
@@ -10,9 +29,11 @@ export function mapProduct(row: ProductRow): Product {
     description: row.description,
     category: row.category,
     collection: row.collection,
-    images: row.images ?? [],
+    images,
     sizes: row.sizes ?? [],
-    colors: row.colors ?? [],
+    colors: (row.colors ?? []).map((color) =>
+      typeof color === "string" ? { name: color, hex: color } : color
+    ),
     details: row.details ?? [],
     care: row.care ?? [],
     isNew: row.is_new ?? false,

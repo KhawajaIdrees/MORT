@@ -29,7 +29,12 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   const selectedCollection = searchParams.collection;
 
   const filteredProducts = products.filter((p) => {
-    if (selectedCategory && p.category !== selectedCategory) return false;
+    const normalizedCategory = p.category.toLowerCase().replace(/[\s_-]+/g, "");
+    if (
+      selectedCategory &&
+      normalizedCategory !== selectedCategory.replace(/[\s_-]+/g, "").toLowerCase() &&
+      !(selectedCategory === "polos" && normalizedCategory.startsWith("polo"))
+    ) return false;
     if (selectedCollection && p.collection !== selectedCollection) return false;
     return true;
   });

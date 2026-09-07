@@ -18,6 +18,13 @@ export const CATEGORIES: Category[] = [
     image: "/images/layout/cat-tshirts.png",
   },
   {
+    id: "cat-5",
+    name: "POLOS",
+    slug: "polos",
+    count: "2+ ITEMS",
+    image: "/images/tshirts/White-Polo-shirt.jpg",
+  },
+  {
     id: "cat-3",
     name: "PANTS",
     slug: "pants",
@@ -85,7 +92,10 @@ export const PRODUCTS: Product[] = [
       "Heavyweight 280GSM combed cotton jersey t-shirt. Features a relaxed boxy cut, ribbed collar, and understated tonal chest branding.",
     category: "tshirts",
     collection: "oblivion",
-    images: ["/images/layout/prod-tshirt.png"],
+    images: [
+      "/images/tshirts/mort-tshirt-black-flat.png",
+      "/images/tshirts/mort-tshirt-white.jpg",
+    ],
     sizes: ["S", "M", "L", "XL"],
     colors: [
       { name: "Washed Black", hex: "#141414" },
