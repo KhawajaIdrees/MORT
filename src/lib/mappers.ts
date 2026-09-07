@@ -13,12 +13,54 @@ function normalizeImagePath(image: string): string {
 }
 
 export function mapProduct(row: ProductRow): Product {
-  const images = row.slug === "minimal-t-shirt"
+  let images = row.slug === "minimal-t-shirt"
     ? [
         "/images/tshirts/mort-tshirt-black-flat.png",
         "/images/tshirts/mort-tshirt-white.jpg",
       ]
     : (row.images ?? []).map(normalizeImagePath);
+  let colors = (row.colors ?? []).map((color) =>
+    typeof color === "string" ? { name: color, hex: color } : color
+  );
+
+  if (row.slug === "utility-cargo-pants") {
+    images = ["/images/pants/mort-cargo-black-flat.png"];
+    colors = [{ name: "Black", hex: "#111111" }];
+  }
+
+  if (row.slug.includes("shorts")) {
+    images = [
+      "/images/pants/White-shorts.jpg",
+      "/images/pants/Black-shorts.jpg",
+      "/images/pants/Wine-red-shorts.jpg",
+    ];
+    colors = [
+      { name: "White", hex: "#F5F5F0" },
+      { name: "Black", hex: "#111111" },
+      { name: "Wine Red", hex: "#722F37" },
+    ];
+  }
+
+  if (row.slug.includes("cap")) {
+    images = row.slug === "white-p-cap"
+      ? [
+          "/images/accessories/white p-cap.jpg",
+          "/images/accessories/mort-cap-black-flat.png",
+        ]
+      : [
+          "/images/accessories/mort-cap-black-flat.png",
+          "/images/accessories/white p-cap.jpg",
+        ];
+    colors = row.slug === "white-p-cap"
+      ? [
+          { name: "White", hex: "#F5F5F0" },
+          { name: "Black", hex: "#111111" },
+        ]
+      : [
+          { name: "Black", hex: "#111111" },
+          { name: "White", hex: "#F5F5F0" },
+        ];
+  }
 
   return {
     id: row.id,
@@ -31,9 +73,7 @@ export function mapProduct(row: ProductRow): Product {
     collection: row.collection,
     images,
     sizes: row.sizes ?? [],
-    colors: (row.colors ?? []).map((color) =>
-      typeof color === "string" ? { name: color, hex: color } : color
-    ),
+    colors,
     details: row.details ?? [],
     care: row.care ?? [],
     isNew: row.is_new ?? false,

@@ -95,8 +95,7 @@ export default function ProductDetailPage() {
     setTimeout(() => setAdded(false), 2500);
   };
 
-  const handleColorSelect = (color: { name: string; hex: string }, colorIndex: number) => {
-    setSelectedColor(color);
+  const getColorImage = (color: { name: string; hex: string }, colorIndex: number) => {
     const colorName = color.name.toLowerCase();
     const colorImage = product.images.find((image) => {
       const imageName = image.toLowerCase();
@@ -104,8 +103,22 @@ export default function ProductDetailPage() {
         return imageName.includes("white") || imageName.includes("off-white");
       }
       if (colorName.includes("black")) return imageName.includes("black");
+      if (colorName.includes("wine") || colorName.includes("red")) {
+        return imageName.includes("wine") || imageName.includes("red");
+      }
       return false;
-    }) ?? product.images[colorIndex];
+    });
+
+    return colorImage ?? product.images[colorIndex];
+  };
+
+  const availableColors = product.colors
+    .map((color, colorIndex) => ({ color, colorIndex }))
+    .filter(({ color, colorIndex }) => Boolean(getColorImage(color, colorIndex)));
+
+  const handleColorSelect = (color: { name: string; hex: string }, colorIndex: number) => {
+    setSelectedColor(color);
+    const colorImage = getColorImage(color, colorIndex);
     if (colorImage) setActiveImage(colorImage);
   };
 
@@ -179,14 +192,14 @@ export default function ProductDetailPage() {
             </p>
           </div>
 
-          {product.colors.length > 0 && (
+          {availableColors.length > 0 && (
             <div className="space-y-3">
               <div className="flex justify-between text-xs font-display tracking-widest text-[#8A8A8A]">
                 <span>SELECT COLOR</span>
                 <span className="text-[#F5F5F0]">{selectedColor.name}</span>
               </div>
               <div className="flex gap-3">
-                {product.colors.map((color, colorIndex) => (
+                {availableColors.map(({ color, colorIndex }) => (
                   <button
                     key={color.name}
                     onClick={() => handleColorSelect(color, colorIndex)}
