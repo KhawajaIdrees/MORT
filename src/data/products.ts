@@ -4,6 +4,27 @@ export type { Category, Collection, Product };
 
 const ADDITIONAL_PRODUCTS: Product[] = [
   {
+    id: "local-white-tshirt",
+    name: "White T-Shirt",
+    slug: "mort-white-t-shirt",
+    price: 3200,
+    originalPrice: 4200,
+    description: "Heavyweight 280GSM cotton T-shirt with understated MORT branding.",
+    category: "tshirts",
+    collection: "oblivion",
+    images: ["/images/tshirts/mort-tshirt-white.jpg"],
+    sizes: ["S", "M", "L", "XL"],
+    colors: [{ name: "Raw Off-White", hex: "#EBEBE6" }],
+    details: ["280GSM heavyweight jersey", "Relaxed boxy fit", "Reinforced crewneck collar"],
+    care: ["Machine wash cold", "Line dry in shade", "Do not bleach"],
+    isNew: true,
+    isFeatured: true,
+    rating: 4.8,
+    reviewsCount: 0,
+    stock: 25,
+    totalStock: 25,
+  },
+  {
     id: "local-white-polo",
     name: "Premium White Polo Shirt",
     slug: "premium-white-polo-shirt",

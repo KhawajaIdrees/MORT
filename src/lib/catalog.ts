@@ -7,6 +7,7 @@ const HIDDEN_PRODUCT_SLUGS = new Set([
   "essential-hoodie",
   "mort-001-origin-zip-hoodie",
   "mort-001-origin-hoodie",
+  "premium-white-polo-shirt",
 ]);
 
 export async function fetchProducts(): Promise<Product[]> {
