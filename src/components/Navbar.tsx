@@ -38,6 +38,7 @@ export const Navbar = () => {
   ];
 
   const mobileNavLinks = [
+    { name: "HOME", href: "/" },
     { name: "SHOP", href: "/shop" },
     { name: "COLLECTIONS", href: "/collections" },
     { name: "ABOUT", href: "/about" },

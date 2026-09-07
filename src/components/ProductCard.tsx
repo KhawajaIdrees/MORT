@@ -57,7 +57,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Quick Add Overlay on Hover */}
         <button
           onClick={handleQuickAdd}
-          className="absolute inset-x-3 bottom-3 py-2 bg-white text-black text-xs font-sans font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2"
+          className="hidden min-[941px]:flex absolute inset-x-3 bottom-3 py-2 bg-white text-black text-xs font-sans font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center gap-2"
         >
           <ShoppingBag className="w-3.5 h-3.5" />
           <span>{added ? "ADDED" : "QUICK ADD"}</span>
