@@ -7,6 +7,7 @@ const HIDDEN_PRODUCT_SLUGS = new Set([
   "essential-hoodie",
   "mort-001-origin-zip-hoodie",
   "mort-001-origin-hoodie",
+  "white-signature-cap",
 ]);
 
 export async function fetchProducts(): Promise<Product[]> {
@@ -16,8 +17,15 @@ export async function fetchProducts(): Promise<Product[]> {
     .order("created_at", { ascending: true });
 
   if (error) throw error;
+  const localProductsBySlug = new Map(PRODUCTS.map((product) => [product.slug, product]));
   const databaseProducts = ((data ?? []) as ProductRow[])
     .map(mapProduct)
+    .map((product) => {
+      const localProduct = localProductsBySlug.get(product.slug);
+      return product.images.length > 0 || !localProduct
+        ? product
+        : { ...product, images: localProduct.images };
+    })
     .filter((product) => !HIDDEN_PRODUCT_SLUGS.has(product.slug));
   const databaseSlugs = new Set(databaseProducts.map((product) => product.slug));
   return [
