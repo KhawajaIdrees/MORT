@@ -28,6 +28,10 @@ export function mapProduct(row: ProductRow): Product {
     colors = [{ name: "Black", hex: "#111111" }];
   }
 
+  if (row.slug === "black-polo-shirt" || row.slug === "white-polo-shirt") {
+    row = { ...row, category: "polos" };
+  }
+
   if (row.slug.includes("shorts")) {
     images = row.slug === "wine-red-shorts"
       ? [
@@ -35,6 +39,12 @@ export function mapProduct(row: ProductRow): Product {
           "/images/pants/Black-shorts.jpg",
           "/images/pants/White-shorts.jpg",
         ]
+      : row.slug === "black-shorts"
+        ? [
+            "/images/pants/Black-shorts.jpg",
+            "/images/pants/White-shorts.jpg",
+            "/images/pants/Wine-red-shorts.jpg",
+          ]
       : [
           "/images/pants/White-shorts.jpg",
           "/images/pants/Black-shorts.jpg",
