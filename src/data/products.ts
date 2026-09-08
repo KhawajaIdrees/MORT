@@ -53,7 +53,7 @@ const ADDITIONAL_PRODUCTS: Product[] = [
   ...[
     ["Crossbody Bag", "crossbody-bag", "/images/accessories/crossbody-bag.jpg", 3800],
     ["Sunglasses", "sunglasses", "/images/accessories/sunglasses.jpg", 2800],
-    ["Bracelet", "bracelet", "/images/accessories/Bracelet.jpg", 2200],
+    ["Bracelet", "bracelet", "/images/accessories/bracelet.jpg", 2200],
     ["Keychain", "keychain", "/images/accessories/keychain.jpg", 1500],
     ["Black Beanie", "black-beanie", "/images/accessories/black-bennie.jpg", 2500],
     ["Black Leather Wallet", "black-leather-wallet", "/images/accessories/black-leather-wallet.jpg", 3500],
