@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createSupabaseServer } from "@/lib/supabase/session";
-import { supabaseAdmin } from "@/lib/supabase/server";
+import { createSupabaseAdmin } from "@/lib/supabase/server";
 import type { OrderItem, ShippingAddress } from "@/types";
 
 export async function POST(request: Request) {
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
       data: { user },
     } = await supabase.auth.getUser();
 
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await createSupabaseAdmin()
       .from("orders")
       .insert({
         user_id: user?.id ?? null,

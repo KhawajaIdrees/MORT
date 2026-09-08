@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase/server";
+import { createSupabaseAdmin } from "@/lib/supabase/server";
 
 export async function POST(request: Request) {
   try {
@@ -10,7 +10,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "A valid email is required." }, { status: 400 });
     }
 
-    const { error } = await supabaseAdmin.from("waitlist").insert({ email });
+    const { error } = await createSupabaseAdmin().from("waitlist").insert({ email });
 
     if (error) {
       if (error.code === "23505") {

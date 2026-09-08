@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "@/lib/supabase/server";
+import { createSupabaseAdmin } from "@/lib/supabase/server";
 import { PRODUCTS } from "@/data/products";
 import { mapCollection, mapProduct } from "@/lib/mappers";
 import type { Collection, CollectionRow, Product, ProductRow } from "@/types";
@@ -10,7 +10,7 @@ const HIDDEN_PRODUCT_SLUGS = new Set([
 ]);
 
 export async function fetchProducts(): Promise<Product[]> {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await createSupabaseAdmin()
     .from("products")
     .select("*")
     .order("created_at", { ascending: true });
@@ -32,7 +32,7 @@ export async function fetchProducts(): Promise<Product[]> {
 export async function fetchProductBySlug(slug: string): Promise<Product | null> {
   if (HIDDEN_PRODUCT_SLUGS.has(slug)) return null;
 
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await createSupabaseAdmin()
     .from("products")
     .select("*")
     .eq("slug", slug)
@@ -43,7 +43,7 @@ export async function fetchProductBySlug(slug: string): Promise<Product | null> 
 }
 
 export async function fetchCollections(): Promise<Collection[]> {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await createSupabaseAdmin()
     .from("collections")
     .select("*")
     .order("number", { ascending: true });
